@@ -117,7 +117,7 @@ void MX_GPIO_Init(void)
   /*Configure GPIO pins : PDPin PDPin PDPin PDPin
                            PDPin PDPin PDPin PDPin */
   GPIO_InitStruct.Pin = DI1_Pin|DI2_Pin|DI3_Pin|DI4_Pin
-                          |IDB4_Pin|IDB3_Pin|IDB2_Pin|IDB3D3_Pin;
+                          |IDB4_Pin|IDB3_Pin|IDB2_Pin|IDB1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);

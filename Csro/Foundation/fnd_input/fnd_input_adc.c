@@ -2,7 +2,7 @@
 #include "adc.h"
 #include "math.h"
 
-#define ADC_TOTAL_CH 12
+#define ADC_TOTAL_CH 13
 #define DATA_PER_CH 10
 
 uint32_t fnd_adc_data[ADC_TOTAL_CH * DATA_PER_CH];
@@ -29,10 +29,10 @@ void fnd_input_adc_init(void)
 
 void fnd_input_adc_read_ntc_temp(float *values)
 {
-    for (uint8_t i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 6; i++)
     {
-        float ntc_adc_value = get_channel_average(i);
-        float ntc_resister_value = (float)10 * ntc_adc_value / (4096 - ntc_adc_value);
+        float ntc_adc_value = get_channel_average(i + 4);
+        float ntc_resister_value = (float)1.0 * ntc_adc_value / (4096.0 - ntc_adc_value);
         values[i] = calculate_ntc_temperature(ntc_resister_value, 10.0, 3950);
     }
 }

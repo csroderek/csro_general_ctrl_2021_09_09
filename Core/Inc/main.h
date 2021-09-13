@@ -148,8 +148,8 @@ void Error_Handler(void);
 #define IDB3_GPIO_Port GPIOD
 #define IDB2_Pin GPIO_PIN_2
 #define IDB2_GPIO_Port GPIOD
-#define IDB3D3_Pin GPIO_PIN_3
-#define IDB3D3_GPIO_Port GPIOD
+#define IDB1_Pin GPIO_PIN_3
+#define IDB1_GPIO_Port GPIOD
 #define EN2_Pin GPIO_PIN_4
 #define EN2_GPIO_Port GPIOD
 #define VALVE_PWM_Pin GPIO_PIN_3

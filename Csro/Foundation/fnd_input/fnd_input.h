@@ -14,6 +14,8 @@ void fnd_input_adc_read_rhi_temp_humi(float *values);
 void fnd_input_adc_read_valve_feedback(float *values);
 
 void fnd_input_gpio_read_di(uint8_t *values);
+void fnd_input_gpio_read_ida(uint8_t *values);
+void fnd_input_gpio_read_idb(uint8_t *values);
 
 void fnd_input_tim_input_capture_init(void);
 void fnd_input_tim_input_read_speed(uint16_t *values);

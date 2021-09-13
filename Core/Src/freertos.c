@@ -26,6 +26,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "gpio.h"
+#include "fnd_input.h"
 
 /* USER CODE END Includes */
 
@@ -46,6 +48,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+
+uint8_t di[4];
+uint8_t ida[4];
+uint8_t idb[4];
+float ntc_temp[6];
 
 /* USER CODE END Variables */
 /* Definitions for Task01 */
@@ -213,7 +220,7 @@ void StartTask01(void *argument)
   MX_LWIP_Init();
   /* USER CODE BEGIN StartTask01 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(1);
   }
@@ -231,7 +238,7 @@ void StartTask02(void *argument)
 {
   /* USER CODE BEGIN StartTask02 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(1);
   }
@@ -249,7 +256,7 @@ void StartTask03(void *argument)
 {
   /* USER CODE BEGIN StartTask03 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(1);
   }
@@ -267,7 +274,7 @@ void StartTask04(void *argument)
 {
   /* USER CODE BEGIN StartTask04 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(1);
   }
@@ -285,7 +292,7 @@ void StartTask05(void *argument)
 {
   /* USER CODE BEGIN StartTask05 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(1);
   }
@@ -303,7 +310,7 @@ void StartTask06(void *argument)
 {
   /* USER CODE BEGIN StartTask06 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(1);
   }
@@ -321,7 +328,7 @@ void StartTask07(void *argument)
 {
   /* USER CODE BEGIN StartTask07 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(1);
   }
@@ -338,10 +345,15 @@ void StartTask07(void *argument)
 void StartTask08(void *argument)
 {
   /* USER CODE BEGIN StartTask08 */
+  fnd_input_adc_init();
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
-    osDelay(1);
+    osDelay(100);
+    fnd_input_gpio_read_di(di);
+    fnd_input_gpio_read_ida(ida);
+    fnd_input_gpio_read_idb(idb);
+    fnd_input_adc_read_ntc_temp(ntc_temp);
   }
   /* USER CODE END StartTask08 */
 }
