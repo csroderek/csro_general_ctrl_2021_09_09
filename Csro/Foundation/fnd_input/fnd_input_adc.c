@@ -5,6 +5,15 @@
 #define ADC_TOTAL_CH 13
 #define DATA_PER_CH 10
 
+#define NTC_TOTAL_CH 6
+#define NTC_START_CH 4
+
+#define DELTA_P_TOTAL_CH 3
+#define DELTA_P_START_CH 0
+
+#define VALVE_FB_TOTAL_CH 1
+#define VALVE_FB_START_CH 3
+
 uint32_t fnd_adc_data[ADC_TOTAL_CH * DATA_PER_CH];
 
 static float get_channel_average(uint8_t ch_idx)
@@ -29,34 +38,28 @@ void fnd_input_adc_init(void)
 
 void fnd_input_adc_read_ntc_temp(float *values)
 {
-    for (uint8_t i = 0; i < 6; i++)
+    for (uint8_t i = 0; i < NTC_TOTAL_CH; i++)
     {
-        float ntc_adc_value = get_channel_average(i + 4);
+        float ntc_adc_value = get_channel_average(i + NTC_START_CH);
         float ntc_resister_value = (float)1.0 * ntc_adc_value / (4096.0 - ntc_adc_value);
         values[i] = calculate_ntc_temperature(ntc_resister_value, 10.0, 3950);
     }
 }
 
-void fnd_input_adc_read_rhi_temp_humi(float *values)
+void fnd_input_adc_read_pressure_difference(float *values)
 {
-    for (uint8_t i = 0; i < 2; i++)
+    for (uint8_t i = 0; i < DELTA_P_TOTAL_CH; i++)
     {
-        float rhi_temp_adc_value = get_channel_average(4 + 2 * i);
-        float rhi_temp_res_value = 10 * rhi_temp_adc_value / (4096 - rhi_temp_adc_value);
-        values[2 * i] = calculate_ntc_temperature(rhi_temp_res_value, 10.0, 3380);
-
-        float rhi_humi_adc_value = get_channel_average(5 + 2 * i);
-        float ave_adc_vrefint = get_channel_average(11);
-        float rhi_humi_voltage = rhi_humi_adc_value / ave_adc_vrefint * 1.20;
-        values[1 + 2 * i] = rhi_humi_voltage / 3.3 * 100;
+        float delta_p_adc_value = get_channel_average(i + DELTA_P_START_CH);
+        values[i] = delta_p_adc_value;
     }
 }
 
 void fnd_input_adc_read_valve_feedback(float *values)
 {
-    for (uint8_t i = 0; i < 2; i++)
+    for (uint8_t i = 0; i < VALVE_FB_TOTAL_CH; i++)
     {
-        double valve_pos_adc_value = get_channel_average(8 + i) / 100.0;
-        values[i] = (0.0004 * pow(valve_pos_adc_value, 4) - 0.0157 * pow(valve_pos_adc_value, 3) + 0.2021 * pow(valve_pos_adc_value, 2) + 1.6306 * valve_pos_adc_value + 2.3352);
+        double valve_pos_adc_value = get_channel_average(i + VALVE_FB_START_CH) / 100.0;
+        values[i] = (float)valve_pos_adc_value;
     }
 }
