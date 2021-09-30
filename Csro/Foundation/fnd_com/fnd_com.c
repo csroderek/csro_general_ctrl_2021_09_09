@@ -27,37 +27,46 @@ void fnd_com_modbus_rtu_init(void)
 }
 void fnd_com_modbus_rtu_uart_idle_irq(UART_HandleTypeDef *huart)
 {
-    if (huart == slaves[0].uart_port->uart)
+    if (huart == master[0].uart_port->uart)
     {
-        if (sys_regs.holdings[8] > 0 && sys_regs.holdings[8] < 255)
-        {
-            slaves[0].slave_id = sys_regs.holdings[8];
-        }
-        slave_uart_idle(&slaves[0]);
+        master_uart_idle(&master[0]);
+    }
+    else if (huart == master[1].uart_port->uart)
+    {
+        master_uart_idle(&master[1]);
     }
     else if (huart == slaves[1].uart_port->uart)
     {
-        slave_uart_idle(&slaves[1]);
+        slave_uart_idle(&slaves[0]);
     }
     else if (huart == slaves[2].uart_port->uart)
     {
-        slave_uart_idle(&slaves[2]);
+        slave_uart_idle(&slaves[1]);
     }
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
+    if (huart == master[0].uart_port->uart)
+    {
+        master_set_tx_rx(&master[0], rx);
+    }
+    else if (huart == master[1].uart_port->uart)
+    {
+        master_set_tx_rx(&master[1], rx);
+    }
     if (huart == slaves[0].uart_port->uart)
+    {
         slave_set_tx_rx(&slaves[0], rx);
+    }
     else if (huart == slaves[1].uart_port->uart)
+    {
         slave_set_tx_rx(&slaves[1], rx);
-    else if (huart == slaves[2].uart_port->uart)
-        slave_set_tx_rx(&slaves[2], rx);
+    }
 }
 
 void fnd_com_modbus_rtu_master1_read_write(void)
 {
-
 }
 
 void fnd_com_modbus_rtu_master2_read_write(void)
