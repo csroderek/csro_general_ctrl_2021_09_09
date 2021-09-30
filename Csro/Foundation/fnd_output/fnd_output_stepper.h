@@ -29,4 +29,8 @@ typedef struct
 
 } stepper_motor;
 
+void fnd_output_stepper_init(void);
+void fnd_output_stepper_set_position(uint16_t *values);
+void fnd_output_stepper_10ms_tick(void);
+
 #endif

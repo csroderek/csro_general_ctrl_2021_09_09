@@ -1,16 +1,21 @@
 #include "fnd_output.h"
+#include "gpio.h"
 
 #define EXCITE_TICKS 5
 
-void fnd_output_stepper_init(stepper_motor *stepper)
-{
-}
+stepper_motor motor[4];
 
-void fnd_output_stepper_set_position(stepper_motor *stepper, uint16_t position)
-{
-}
+GPIO_TypeDef *stepper_port[16] = {STEP_A1_GPIO_Port, STEP_A2_GPIO_Port, STEP_A3_GPIO_Port, STEP_A4_GPIO_Port,
+                                  STEP_A5_GPIO_Port, STEP_A6_GPIO_Port, STEP_A7_GPIO_Port, STEP_A8_GPIO_Port,
+                                  STEP_B1_GPIO_Port, STEP_B2_GPIO_Port, STEP_B3_GPIO_Port, STEP_B4_GPIO_Port,
+                                  STEP_B5_GPIO_Port, STEP_B6_GPIO_Port, STEP_B7_GPIO_Port, STEP_B8_GPIO_Port};
 
-void fnd_output_stepper_10ms_tick(stepper_motor *motor)
+uint16_t stepper_pin[16] = {STEP_A1_Pin, STEP_A2_Pin, STEP_A3_Pin, STEP_A4_Pin,
+                            STEP_A5_Pin, STEP_A6_Pin, STEP_A7_Pin, STEP_A8_Pin,
+                            STEP_B1_Pin, STEP_B2_Pin, STEP_B3_Pin, STEP_B4_Pin,
+                            STEP_B5_Pin, STEP_B6_Pin, STEP_B7_Pin, STEP_B8_Pin};
+
+static void fnd_output_stepper_tick(stepper_motor *motor)
 {
     if (motor->current_pos == motor->target_pos)
     {
@@ -83,4 +88,38 @@ void fnd_output_stepper_10ms_tick(stepper_motor *motor)
         HAL_GPIO_WritePin(motor->gpio_port[2], motor->gpio_pin[2], (motor->phase == 3 || motor->phase == 4 || motor->phase == 5) ? GPIO_PIN_SET : GPIO_PIN_RESET);
         HAL_GPIO_WritePin(motor->gpio_port[3], motor->gpio_pin[3], (motor->phase == 5 || motor->phase == 6 || motor->phase == 7) ? GPIO_PIN_SET : GPIO_PIN_RESET);
     }
+}
+
+void fnd_output_stepper_init(void)
+{
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        for (uint8_t j = 0; j < 4; j++)
+        {
+            motor[i].gpio_port[j] = stepper_port[i * 4 + j];
+            motor[i].gpio_pin[j] = stepper_pin[i * 4 + j];
+        }
+        motor[i].current_pos = 0;
+        motor[i].down_excite_cnt = 0;
+        motor[i].mode = STOP;
+        motor[i].phase = 0;
+        motor[i].target_pos = 0;
+        motor[i].up_excite_cnt = 0;
+    }
+}
+
+void fnd_output_stepper_set_position(uint16_t *values)
+{
+    motor[0].target_pos = values[0];
+    motor[1].target_pos = values[1];
+    motor[2].target_pos = values[2];
+    motor[3].target_pos = values[3];
+}
+
+void fnd_output_stepper_10ms_tick(void)
+{
+    fnd_output_stepper_tick(&motor[0]);
+    fnd_output_stepper_tick(&motor[1]);
+    fnd_output_stepper_tick(&motor[2]);
+    fnd_output_stepper_tick(&motor[3]);
 }

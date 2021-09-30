@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "fnd_input.h"
+#include "fnd_output.h"
 
 /* USER CODE END Includes */
 
@@ -285,10 +286,12 @@ void StartTask04(void *argument)
 void StartTask05(void *argument)
 {
   /* USER CODE BEGIN StartTask05 */
+  fnd_output_stepper_init();
   /* Infinite loop */
   for (;;)
   {
-    osDelay(1);
+    osDelay(10);
+    fnd_output_stepper_10ms_tick();
   }
   /* USER CODE END StartTask05 */
 }
@@ -309,6 +312,7 @@ void StartTask06(void *argument)
   {
     osDelay(100);
     fnd_input_update_value();
+    fnd_output_update_value();
   }
   /* USER CODE END StartTask06 */
 }
