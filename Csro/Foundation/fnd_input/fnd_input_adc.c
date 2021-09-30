@@ -5,14 +5,14 @@
 #define ADC_TOTAL_CH 13
 #define DATA_PER_CH 10
 
-#define NTC_TOTAL_CH 6
-#define NTC_START_CH 4
-
-#define DELTA_P_TOTAL_CH 3
 #define DELTA_P_START_CH 0
+#define DELTA_P_TOTAL_CH 3
 
-#define VALVE_FB_TOTAL_CH 1
 #define VALVE_FB_START_CH 3
+#define VALVE_FB_TOTAL_CH 1
+
+#define NTC_START_CH 4
+#define NTC_TOTAL_CH 6
 
 uint32_t fnd_adc_data[ADC_TOTAL_CH * DATA_PER_CH];
 
@@ -36,16 +36,6 @@ void fnd_input_adc_init(void)
     HAL_ADC_Start_DMA(&hadc1, fnd_adc_data, ADC_TOTAL_CH * DATA_PER_CH);
 }
 
-void fnd_input_adc_read_ntc_temp(float *values)
-{
-    for (uint8_t i = 0; i < NTC_TOTAL_CH; i++)
-    {
-        float ntc_adc_value = get_channel_average(i + NTC_START_CH);
-        float ntc_resister_value = (float)1.0 * ntc_adc_value / (4096.0 - ntc_adc_value);
-        values[i] = calculate_ntc_temperature(ntc_resister_value, 10.0, 3950);
-    }
-}
-
 void fnd_input_adc_read_pressure_difference(float *values)
 {
     for (uint8_t i = 0; i < DELTA_P_TOTAL_CH; i++)
@@ -61,5 +51,15 @@ void fnd_input_adc_read_valve_feedback(float *values)
     {
         double valve_pos_adc_value = get_channel_average(i + VALVE_FB_START_CH) / 100.0;
         values[i] = (float)valve_pos_adc_value;
+    }
+}
+
+void fnd_input_adc_read_ntc_temp(float *values)
+{
+    for (uint8_t i = 0; i < NTC_TOTAL_CH; i++)
+    {
+        float ntc_adc_value = get_channel_average(i + NTC_START_CH);
+        float ntc_resister_value = (float)1.0 * ntc_adc_value / (4096.0 - ntc_adc_value);
+        values[i] = calculate_ntc_temperature(ntc_resister_value, 10.0, 3950);
     }
 }

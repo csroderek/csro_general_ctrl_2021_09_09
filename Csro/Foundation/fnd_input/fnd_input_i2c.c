@@ -51,12 +51,16 @@ HAL_StatusTypeDef fnd_input_i2c_read_sht_temp_humi(uint8_t idx, float *values)
     }
 
     if (sht_write_cmd(sht_i2c[idx], 0x240B) != HAL_OK)
+    {
         return HAL_ERROR;
+    }
 
     osDelay(50);
 
     if (HAL_I2C_Master_Receive(sht_i2c[idx], SHT_ADDR | 0x01, buff, 6, I2C_TIMEOUT) != HAL_OK)
+    {
         return HAL_ERROR;
+    }
 
     if (calculate_crc(buff, 2) == buff[2] && calculate_crc(&buff[3], 2) == buff[5])
     {
