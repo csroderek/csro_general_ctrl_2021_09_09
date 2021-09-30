@@ -1,5 +1,6 @@
 {
   "files.associations": {
-    "limits": "cpp"
+    "limits": "cpp",
+    "fnd_com.h": "c"
   }
 }

@@ -12,7 +12,7 @@ void fnd_output_stepper_set_position(stepper_motor *stepper, uint16_t position)
 
 void fnd_output_stepper_10ms_tick(stepper_motor *motor)
 {
-    if (motor->current_pos == motor->current_pos)
+    if (motor->current_pos == motor->target_pos)
     {
         motor->mode = STOP;
         motor->up_excite_cnt = 0;
@@ -45,7 +45,7 @@ void fnd_output_stepper_10ms_tick(stepper_motor *motor)
         }
     }
 
-    if (motor->mode = STOP)
+    if (motor->mode == STOP)
     {
         for (uint8_t i = 0; i < 4; i++)
         {

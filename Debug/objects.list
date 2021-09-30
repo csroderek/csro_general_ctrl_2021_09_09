@@ -23,6 +23,7 @@
 "./Csro/Foundation/fnd_output/fnd_output.o"
 "./Csro/Foundation/fnd_output/fnd_output_gpio.o"
 "./Csro/Foundation/fnd_output/fnd_output_pwm.o"
+"./Csro/Foundation/fnd_output/fnd_output_stepper.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.o"

@@ -136,7 +136,6 @@ void StartTask06(void *argument);
 void StartTask07(void *argument);
 void StartTask08(void *argument);
 
-extern void MX_LWIP_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -216,8 +215,6 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartTask01 */
 void StartTask01(void *argument)
 {
-  /* init code for LWIP */
-  MX_LWIP_Init();
   /* USER CODE BEGIN StartTask01 */
   /* Infinite loop */
   for (;;)
