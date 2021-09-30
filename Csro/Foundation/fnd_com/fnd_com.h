@@ -21,8 +21,10 @@
 
 //holding registers address define
 
-extern modbus_slave slaves[3];
 extern modbus_regs sys_regs;
+extern modbus_master master[2];
+extern modbus_slave slaves[2];
+
 
 void fnd_com_modbus_rtu_init(void);
 void fnd_com_modbus_rtu_uart_idle_irq(UART_HandleTypeDef *huart);

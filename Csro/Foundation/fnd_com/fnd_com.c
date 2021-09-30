@@ -15,7 +15,6 @@ modbus_port port[4] = {{&huart2,
                         EN4_GPIO_Port,
                         EN4_Pin}};
 modbus_regs sys_regs;
-
 modbus_master master[2];
 modbus_slave slaves[2];
 
@@ -58,6 +57,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 void fnd_com_modbus_rtu_master1_read_write(void)
 {
+
 }
 
 void fnd_com_modbus_rtu_master2_read_write(void)
