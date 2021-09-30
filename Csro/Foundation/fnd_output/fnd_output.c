@@ -1,11 +1,6 @@
 #include "fnd_output.h"
 #include "fnd_com.h"
 
-#define INPUT_FAN_PWM_CTRL_START 30 //30-31
-#define INPUT_VAL_PWM_CTRL_START 32 //32
-#define INPUT_RLY_DO_CTRL_START 33  //33-38
-#define INPUT_STEPPER_CTRL_START 39 //39-42
-
 void fnd_output_peripheral_init(void)
 {
     fnd_output_pwm_init();

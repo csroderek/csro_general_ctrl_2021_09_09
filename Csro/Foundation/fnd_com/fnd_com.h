@@ -3,6 +3,7 @@
 
 #include "stm32f4xx_hal.h"
 #include "mb_slave.h"
+#include "mb_master.h"
 
 //input registers address define
 #define INPUT_PRE_START 0     //0-2

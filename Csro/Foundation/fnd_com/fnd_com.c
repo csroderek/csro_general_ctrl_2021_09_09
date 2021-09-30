@@ -2,32 +2,29 @@
 #include "usart.h"
 #include "gpio.h"
 
-modbus_port port1 = {
-    &huart2,
-    EN3_GPIO_Port,
-    EN3_Pin,
-};
-
-modbus_port port2 = {
-    &huart1,
-    EN2_GPIO_Port,
-    EN2_Pin,
-};
-
-modbus_port port3 = {
-    &huart3,
-    EN1_GPIO_Port,
-    EN1_Pin,
-};
-
-modbus_slave slaves[3];
+modbus_port port[4] = {{&huart2,
+                        EN3_GPIO_Port,
+                        EN3_Pin},
+                       {&huart1,
+                        EN2_GPIO_Port,
+                        EN2_Pin},
+                       {&huart3,
+                        EN1_GPIO_Port,
+                        EN1_Pin},
+                       {&huart6,
+                        EN4_GPIO_Port,
+                        EN4_Pin}};
 modbus_regs sys_regs;
+
+modbus_master master[2];
+modbus_slave slaves[2];
 
 void fnd_com_modbus_rtu_init(void)
 {
-    slave_init(&slaves[0], &port1, 1, &sys_regs);
-    slave_init(&slaves[1], &port2, 2, &sys_regs);
-    slave_init(&slaves[2], &port3, 3, &sys_regs);
+    master_init(&master[0], &port[0], 1);
+    master_init(&master[2], &port[1], 1);
+    slave_init(&slaves[0], &port[2], 1, &sys_regs);
+    slave_init(&slaves[1], &port[3], 2, &sys_regs);
 }
 void fnd_com_modbus_rtu_uart_idle_irq(UART_HandleTypeDef *huart)
 {
@@ -57,6 +54,14 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
         slave_set_tx_rx(&slaves[1], rx);
     else if (huart == slaves[2].uart_port->uart)
         slave_set_tx_rx(&slaves[2], rx);
+}
+
+void fnd_com_modbus_rtu_master1_read_write(void)
+{
+}
+
+void fnd_com_modbus_rtu_master2_read_write(void)
+{
 }
 
 void fnd_com_modbus_rtu_slave1_wait(void)
