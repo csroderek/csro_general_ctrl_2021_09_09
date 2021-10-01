@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include "fnd_input.h"
 #include "fnd_output.h"
+#include "fnd_com.h"
 
 /* USER CODE END Includes */
 
@@ -58,69 +59,67 @@ float ntc_temp[6];
 /* Definitions for Task01 */
 osThreadId_t Task01Handle;
 const osThreadAttr_t Task01_attributes = {
-  .name = "Task01",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityRealtime7,
+    .name = "Task01",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityRealtime7,
 };
 /* Definitions for Task02 */
 osThreadId_t Task02Handle;
 const osThreadAttr_t Task02_attributes = {
-  .name = "Task02",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityRealtime5,
+    .name = "Task02",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityRealtime5,
 };
 /* Definitions for Task03 */
 osThreadId_t Task03Handle;
 const osThreadAttr_t Task03_attributes = {
-  .name = "Task03",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityRealtime3,
+    .name = "Task03",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityRealtime3,
 };
 /* Definitions for Task04 */
 osThreadId_t Task04Handle;
 const osThreadAttr_t Task04_attributes = {
-  .name = "Task04",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityRealtime1,
+    .name = "Task04",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityRealtime1,
 };
 /* Definitions for Task05 */
 osThreadId_t Task05Handle;
 const osThreadAttr_t Task05_attributes = {
-  .name = "Task05",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh7,
+    .name = "Task05",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityHigh7,
 };
 /* Definitions for Task06 */
 osThreadId_t Task06Handle;
 const osThreadAttr_t Task06_attributes = {
-  .name = "Task06",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh5,
+    .name = "Task06",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityHigh5,
 };
 /* Definitions for Task07 */
 osThreadId_t Task07Handle;
 const osThreadAttr_t Task07_attributes = {
-  .name = "Task07",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh3,
+    .name = "Task07",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityHigh3,
 };
 /* Definitions for Task08 */
 osThreadId_t Task08Handle;
 const osThreadAttr_t Task08_attributes = {
-  .name = "Task08",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh1,
+    .name = "Task08",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityHigh1,
 };
 /* Definitions for Queue01 */
 osMessageQueueId_t Queue01Handle;
 const osMessageQueueAttr_t Queue01_attributes = {
-  .name = "Queue01"
-};
+    .name = "Queue01"};
 /* Definitions for Queue02 */
 osMessageQueueId_t Queue02Handle;
 const osMessageQueueAttr_t Queue02_attributes = {
-  .name = "Queue02"
-};
+    .name = "Queue02"};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -143,7 +142,8 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void) {
+void MX_FREERTOS_Init(void)
+{
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -162,10 +162,10 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* creation of Queue01 */
-  Queue01Handle = osMessageQueueNew (16, sizeof(uint16_t), &Queue01_attributes);
+  Queue01Handle = osMessageQueueNew(16, sizeof(uint16_t), &Queue01_attributes);
 
   /* creation of Queue02 */
-  Queue02Handle = osMessageQueueNew (16, sizeof(uint16_t), &Queue02_attributes);
+  Queue02Handle = osMessageQueueNew(16, sizeof(uint16_t), &Queue02_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -203,7 +203,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_EVENTS */
   /* add events, ... */
   /* USER CODE END RTOS_EVENTS */
-
 }
 
 /* USER CODE BEGIN Header_StartTask01 */
@@ -309,6 +308,7 @@ void StartTask06(void *argument)
 {
   /* USER CODE BEGIN StartTask06 */
   fnd_input_peripheral_init();
+  fnd_output_peripheral_init();
   /* Infinite loop */
   for (;;)
   {
@@ -348,10 +348,16 @@ void StartTask07(void *argument)
 void StartTask08(void *argument)
 {
   /* USER CODE BEGIN StartTask08 */
+  sys_regs.inputs[INPUT_FAN_PWM_CTRL_START + 0] = 200;
+  sys_regs.inputs[INPUT_FAN_PWM_CTRL_START + 1] = 400;
+  sys_regs.inputs[INPUT_VAL_PWM_CTRL_START + 0] = 800;
   /* Infinite loop */
   for (;;)
   {
-    osDelay(100);
+    osDelay(2000);
+    sys_regs.inputs[INPUT_RLY_DO_CTRL_START] = 0;
+    osDelay(2000);
+    sys_regs.inputs[INPUT_RLY_DO_CTRL_START] = 1;
   }
   /* USER CODE END StartTask08 */
 }

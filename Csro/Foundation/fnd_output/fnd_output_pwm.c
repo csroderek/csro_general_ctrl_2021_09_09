@@ -12,16 +12,16 @@ void fnd_output_pwm_write_value(uint16_t *values)
 {
     if (values[0] < 1000)
     {
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint16_t)(values[0] / 1.2));
+        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint16_t)(values[0] / 1.2));
     }
 
     if (values[1] < 1000)
     {
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint16_t)(values[1] / 1.2));
+        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint16_t)(values[1] / 1.2));
     }
 
-    if (values[3] < 1000)
+    if (values[2] < 1000)
     {
-        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, (uint16_t)(values[1] / 1.2));
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, (uint16_t)(values[2] / 1.2));
     }
 }
