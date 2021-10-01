@@ -145,6 +145,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void MX_FREERTOS_Init(void)
 {
   /* USER CODE BEGIN Init */
+  fnd_com_modbus_rtu_init();
 
   /* USER CODE END Init */
 
@@ -218,7 +219,7 @@ void StartTask01(void *argument)
   /* Infinite loop */
   for (;;)
   {
-    osDelay(1);
+    fnd_com_modbus_rtu_slave1_wait();
   }
   /* USER CODE END StartTask01 */
 }
@@ -236,7 +237,7 @@ void StartTask02(void *argument)
   /* Infinite loop */
   for (;;)
   {
-    osDelay(1);
+    fnd_com_modbus_rtu_slave2_wait();
   }
   /* USER CODE END StartTask02 */
 }
