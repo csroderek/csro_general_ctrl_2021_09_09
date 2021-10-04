@@ -67,10 +67,14 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 void fnd_com_modbus_rtu_master1_read_write(void)
 {
+    int16_t values[20];
+    master_read_holding_regs(&master[0], 1, 10, values);
 }
 
 void fnd_com_modbus_rtu_master2_read_write(void)
 {
+    int16_t values[20];
+    master_read_holding_regs(&master[1], 1, 10, values);
 }
 
 void fnd_com_modbus_rtu_slave1_wait(void)

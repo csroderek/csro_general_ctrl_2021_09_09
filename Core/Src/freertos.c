@@ -50,11 +50,6 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
-uint8_t di[4];
-uint8_t ida[4];
-uint8_t idb[4];
-float ntc_temp[6];
-
 /* USER CODE END Variables */
 /* Definitions for Task01 */
 osThreadId_t Task01Handle;
@@ -255,7 +250,8 @@ void StartTask03(void *argument)
   /* Infinite loop */
   for (;;)
   {
-    osDelay(1);
+    fnd_com_modbus_rtu_master1_read_write();
+    osDelay(1000);
   }
   /* USER CODE END StartTask03 */
 }
@@ -273,7 +269,8 @@ void StartTask04(void *argument)
   /* Infinite loop */
   for (;;)
   {
-    osDelay(1);
+    fnd_com_modbus_rtu_master2_read_write();
+    osDelay(1000);
   }
   /* USER CODE END StartTask04 */
 }
