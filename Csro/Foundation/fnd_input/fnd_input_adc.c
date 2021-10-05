@@ -41,7 +41,8 @@ void fnd_input_adc_read_pressure_difference(float *values)
     for (uint8_t i = 0; i < DELTA_P_TOTAL_CH; i++)
     {
         float delta_p_adc_value = get_channel_average(i + DELTA_P_START_CH);
-        values[i] = delta_p_adc_value;
+        //values[i] = (ratio - 0.5) * (ratio / 0.4 - 1.25) * (ratio / 0.4 - 1.25) * 133.0 * 100;
+        values[i] = (delta_p_adc_value / 4095.0) * 190.0 - 38;
     }
 }
 

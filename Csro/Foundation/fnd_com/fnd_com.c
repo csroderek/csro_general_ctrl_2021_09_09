@@ -20,8 +20,8 @@ modbus_slave slaves[2];
 
 void fnd_com_modbus_rtu_init(void)
 {
-    master_init(&master[0], &port[0], 1);
-    master_init(&master[1], &port[1], 1);
+    master_init(&master[0], &port[0], 21);
+    master_init(&master[1], &port[1], 21);
     slave_init(&slaves[0], &port[2], 1, &sys_regs);
     slave_init(&slaves[1], &port[3], 2, &sys_regs);
 }
@@ -67,14 +67,12 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 void fnd_com_modbus_rtu_master1_read_write(void)
 {
-    int16_t values[20];
-    master_read_holding_regs(&master[0], 1, 10, values);
+    //master_read_holding_regs(&master[0], 100, 8, &sys_regs.inputs[INPUT_AQI_START]);
 }
 
 void fnd_com_modbus_rtu_master2_read_write(void)
 {
-    int16_t values[20];
-    master_read_holding_regs(&master[1], 1, 10, values);
+    master_read_holding_regs(&master[1], 100, 8, &sys_regs.inputs[INPUT_AQI_START]);
 }
 
 void fnd_com_modbus_rtu_slave1_wait(void)

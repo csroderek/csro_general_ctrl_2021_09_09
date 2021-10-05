@@ -26,7 +26,7 @@ void fnd_input_tim_input_read_speed(uint16_t *values)
 {
     for (uint8_t i = 0; i < 2; i++)
     {
-        values[i] = (int16_t)(spd_pulse[i] * 2.5);
+        values[i] = (int16_t)(spd_pulse[i] * 600);
         spd_pulse[i] = 0;
     }
 }
