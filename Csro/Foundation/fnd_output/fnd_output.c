@@ -27,5 +27,5 @@ void fnd_output_update_value(void)
     {
         stepper_pos_value[i] = (uint16_t)sys_regs.inputs[INPUT_STEPPER_CTRL_START + i];
     }
-    fnd_output_stepper_set_position(stepper_pos_value);
+    //fnd_output_stepper_set_position(stepper_pos_value);
 }

@@ -60,6 +60,6 @@ void fnd_input_adc_read_ntc_temp(float *values)
     {
         float ntc_adc_value = get_channel_average(i + NTC_START_CH);
         float ntc_resister_value = (float)1.0 * ntc_adc_value / (4096.0 - ntc_adc_value);
-        values[i] = calculate_ntc_temperature(ntc_resister_value, 10.0, 3950);
+        values[i] = calculate_ntc_temperature(ntc_resister_value, 5.0, 3470);
     }
 }

@@ -70,6 +70,7 @@ static void fnd_output_stepper_tick(stepper_motor *motor)
         {
             HAL_GPIO_WritePin(motor->gpio_port[i], motor->gpio_pin[i], GPIO_PIN_RESET);
         }
+        motor->current_pos = motor->current_pos + 1;
         motor->phase = (motor->phase + 1) % 8;
         HAL_GPIO_WritePin(motor->gpio_port[0], motor->gpio_pin[0], (motor->phase == 0 || motor->phase == 1 || motor->phase == 7) ? GPIO_PIN_SET : GPIO_PIN_RESET);
         HAL_GPIO_WritePin(motor->gpio_port[1], motor->gpio_pin[1], (motor->phase == 1 || motor->phase == 2 || motor->phase == 3) ? GPIO_PIN_SET : GPIO_PIN_RESET);
@@ -82,6 +83,7 @@ static void fnd_output_stepper_tick(stepper_motor *motor)
         {
             HAL_GPIO_WritePin(motor->gpio_port[i], motor->gpio_pin[i], GPIO_PIN_RESET);
         }
+        motor->current_pos = motor->current_pos - 1;
         motor->phase = (motor->phase + 7) % 8;
         HAL_GPIO_WritePin(motor->gpio_port[0], motor->gpio_pin[0], (motor->phase == 0 || motor->phase == 1 || motor->phase == 7) ? GPIO_PIN_SET : GPIO_PIN_RESET);
         HAL_GPIO_WritePin(motor->gpio_port[1], motor->gpio_pin[1], (motor->phase == 1 || motor->phase == 2 || motor->phase == 3) ? GPIO_PIN_SET : GPIO_PIN_RESET);
@@ -103,7 +105,7 @@ void fnd_output_stepper_init(void)
         motor[i].down_excite_cnt = 0;
         motor[i].mode = STOP;
         motor[i].phase = 0;
-        motor[i].target_pos = 0;
+        motor[i].target_pos = 500;
         motor[i].up_excite_cnt = 0;
     }
 }
