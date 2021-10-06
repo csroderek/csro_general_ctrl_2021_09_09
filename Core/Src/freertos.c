@@ -270,7 +270,6 @@ void StartTask04(void *argument)
   for (;;)
   {
     fnd_com_modbus_rtu_master2_read_write();
-    osDelay(1000);
   }
   /* USER CODE END StartTask04 */
 }

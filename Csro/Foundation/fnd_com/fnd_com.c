@@ -76,20 +76,24 @@ void fnd_com_modbus_rtu_master1_read_write(void)
 void fnd_com_modbus_rtu_master2_read_write(void)
 {
     // read external holding regs copy to internal holding regs
+    osDelay(50);
     master_read_holding_regs(&master[1], 80, 4, &sys_regs.inputs[90]);
-    master_read_holding_regs(&master[1], 100, 10, &sys_regs.inputs[100]);
-    master_read_holding_regs(&master[1], 110, 10, &sys_regs.inputs[110]);
-    master_read_holding_regs(&master[1], 120, 10, &sys_regs.inputs[120]);
-    master_read_holding_regs(&master[1], 130, 10, &sys_regs.inputs[130]);
-    master_read_holding_regs(&master[1], 140, 7, &sys_regs.inputs[140]);
+
+    osDelay(50);
+    master_read_holding_regs(&master[1], 100, 47, &sys_regs.inputs[100]);
+
+    osDelay(50);
     master_read_holding_regs(&master[1], 200, 8, &sys_regs.inputs[150]);
 
     // write external holding regs
+    osDelay(50);
     master_write_single_coil(&master[1], 640, (sys_regs.holdings[220] == 1) ? 1 : 0);
 
+    osDelay(50);
     sys_regs.holdings[222] = sys_regs.inputs[201] / 200;
     master_write_multi_holding_regs(&master[1], 0, 2, &sys_regs.holdings[221]);
 
+    osDelay(50);
     sys_regs.holdings[225] = sys_regs.inputs[INPUT_SHT_START + 1] / 10;
     sys_regs.holdings[226] = sys_regs.inputs[INPUT_NTC_START];
     sys_regs.holdings[227] = sys_regs.inputs[INPUT_NTC_START + 1];
