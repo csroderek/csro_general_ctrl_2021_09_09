@@ -4,6 +4,8 @@
 void fnd_output_peripheral_init(void)
 {
     fnd_output_pwm_init();
+    sys_regs.holdings[200] = 500;
+    sys_regs.holdings[200 + 1] = 500;
 }
 
 void fnd_output_update_value(void)
@@ -27,5 +29,5 @@ void fnd_output_update_value(void)
     {
         stepper_pos_value[i] = (uint16_t)sys_regs.inputs[INPUT_STEPPER_CTRL_START + i];
     }
-    //fnd_output_stepper_set_position(stepper_pos_value);
+    fnd_output_stepper_set_position(stepper_pos_value);
 }

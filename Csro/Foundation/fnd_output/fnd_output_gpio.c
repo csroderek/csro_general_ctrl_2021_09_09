@@ -6,7 +6,7 @@ uint16_t relay_pin[6] = {RLY1_Pin, RLY2_Pin, RLY3_Pin, RLY4_Pin, RLY5_Pin, RLY6_
 
 void fnd_output_gpio_write_dout(uint8_t *values)
 {
-    for (uint8_t i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 6; i++)
     {
         HAL_GPIO_WritePin(relay_port[i], relay_pin[i], (values[i] == 0) ? GPIO_PIN_RESET : GPIO_PIN_SET);
     }

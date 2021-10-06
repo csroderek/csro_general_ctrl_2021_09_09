@@ -101,11 +101,11 @@ void fnd_output_stepper_init(void)
             motor[i].gpio_port[j] = stepper_port[i * 4 + j];
             motor[i].gpio_pin[j] = stepper_pin[i * 4 + j];
         }
-        motor[i].current_pos = 0;
+        motor[i].current_pos = 1200;
         motor[i].down_excite_cnt = 0;
         motor[i].mode = STOP;
         motor[i].phase = 0;
-        motor[i].target_pos = 500;
+        motor[i].target_pos = 0;
         motor[i].up_excite_cnt = 0;
     }
 }
